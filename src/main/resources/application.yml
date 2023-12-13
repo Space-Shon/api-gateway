@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route-homes
+          uri: ${POSTS_ROUTE_URI:http://localhost:8081}
+          predicates:
+            - Path=/homes/api/**
+          filters:
+            - RewritePath=/homes/api/(?<segment>.*),/homes/api/$\{segment}
+        - id: route-user
+          uri: ${POSTS_ROUTE_URI:http://localhost:8082}
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/api/$\{segment}
